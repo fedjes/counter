@@ -10,7 +10,6 @@ export const Area = (props: AreaPropsType) => {
    let newLocalFiltredValue = 0;
    if(maxValLocal) {
     newLocalFiltredValue = JSON.parse(maxValLocal)
-
    }
         return (
             <StyledArea className={props.value === newLocalFiltredValue ? 'colorInput' : ''}>

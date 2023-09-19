@@ -12,10 +12,9 @@ type InputropsType = {
 
 export const Input = (props: InputropsType) => {
     const changeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        
         let newValueInput = e.currentTarget.value;
         if(props.change && newValueInput) {
-            props.change(JSON.parse(newValueInput));
+            props.change(JSON.parse(newValueInput)); //fix
         }
 
     }

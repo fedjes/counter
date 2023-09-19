@@ -6,6 +6,8 @@ import { Area } from './Area';
 import styled from 'styled-components';
 import { Input } from './Input';
 
+
+//исправить увеличение счётчика до сетания локалСторэдж
 //при значении 0 должна быть разблокированна кнопка Увеличения счетчика ? 
 //при вводе стартовом значения меньше 0 в поле отображения счётчика должна быть ошибка "не корректное значение"
 //при совпадении стартового и максимального значения в поле отображения счётчика должна быть ошибка "не корректное значение"
@@ -13,15 +15,16 @@ import { Input } from './Input';
 
 function App() {
 
+  // let maxFalse = null;
+  // let minFalse = null;
 
- 
   const [inputMinLocal, setInputMinLocal] = useState<number>(0);
   const [inputMaxLocal, setInputMaxLocal] = useState<number>(0);
 
   let minValue = inputMinLocal;
   let maxValue = inputMaxLocal;
   const [value, setValue] = useState<number>(0);
- 
+
 
 
   const incre = () => {
@@ -45,10 +48,20 @@ function App() {
   }
 
   const testSetValueMax = (value: number) => {
+    // if (value < 0) {
+    //   console.log('less 0 max');
+    //    minFalse = false
+    // } else {
+    // }
     setInputMaxLocal(value)
   }
 
   const testSetValueMin = (value: number) => {
+    // if (value < 0) {
+    //   console.log('less 0 max');
+    //    maxFalse = false
+    // } else {
+    // }
     setInputMinLocal(value)
   }
 
@@ -68,7 +81,7 @@ function App() {
   return (
     <div className="App">
       <div>
-        <Area value={value} />
+        <Area value={value}/>
         <Wrapper>
           <Button title="incre" clbk={incre} dis={value === maxValue} />
           <Button title="reset" clbk={reset} dis={value === minValue} />
