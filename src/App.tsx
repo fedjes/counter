@@ -6,8 +6,9 @@ import { Area } from './Area';
 import styled from 'styled-components';
 import { Input } from './Input';
 
-
-//поля счетчика после перезагрузки должны быть равны значению из локалСторедж
+//при значении 0 должна быть разблокированна кнопка Увеличения счетчика ? 
+//при вводе стартовом значения меньше 0 в поле отображения счётчика должна быть ошибка "не корректное значение"
+//при совпадении стартового и максимального значения в поле отображения счётчика должна быть ошибка "не корректное значение"
 
 
 function App() {
@@ -57,6 +58,8 @@ function App() {
     if (localMinValue && localMaxValue) {
       let newMinVal = JSON.parse(localMinValue)
       let newMaxVal = JSON.parse(localMaxValue)
+      setInputMinLocal(newMinVal)
+      setInputMaxLocal(newMaxVal)
       setValue(newMinVal)
     }
   }, [])

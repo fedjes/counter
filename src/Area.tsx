@@ -14,7 +14,7 @@ export const Area = (props: AreaPropsType) => {
    }
         return (
             <StyledArea className={props.value === newLocalFiltredValue ? 'colorInput' : ''}>
-                <h1>{props.value}</h1>
+                <h1>{props.value ? props.value : 'change settings value'}</h1>
             </StyledArea>
         )
     }
