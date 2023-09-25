@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 type AreaPropsType = {
     value: number
+    lessZero: number
 }
 
 export const Area = (props: AreaPropsType) => {
@@ -12,8 +13,8 @@ export const Area = (props: AreaPropsType) => {
     newLocalFiltredValue = JSON.parse(maxValLocal)
    }
         return (
-            <StyledArea className={props.value === newLocalFiltredValue ? 'colorInput' : ''}>
-                <h1>{props.value ? props.value : 'change settings value'}</h1>
+            <StyledArea className={props.value === newLocalFiltredValue || props.lessZero ? 'colorInput' : ''}>
+                <h1>{props.value || !props.lessZero ? props.value : 'change settings value'}</h1>
             </StyledArea>
         )
     }

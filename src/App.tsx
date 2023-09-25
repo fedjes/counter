@@ -17,6 +17,9 @@ function App() {
 
   // let maxFalse = null;
   // let minFalse = null;
+  const [lessZero, setLessZero] = useState(-1)
+  const [equal, setEqual] = useState(0)
+  console.log(lessZero);
 
   const [inputMinLocal, setInputMinLocal] = useState<number>(0);
   const [inputMaxLocal, setInputMaxLocal] = useState<number>(0);
@@ -28,6 +31,7 @@ function App() {
 
 
   const incre = () => {
+
     if (value < inputMaxLocal) {
       setValue(value + 1);
     }
@@ -48,6 +52,7 @@ function App() {
   }
 
   const testSetValueMax = (value: number) => {
+
     // if (value < 0) {
     //   console.log('less 0 max');
     //    minFalse = false
@@ -77,20 +82,22 @@ function App() {
     }
   }, [])
 
+  console.log({ minValue });
+  console.log({ value });
 
   return (
     <div className="App">
       <div>
-        <Area value={value}/>
+        <Area value={value} lessZero={lessZero} />
         <Wrapper>
-          <Button title="incre" clbk={incre} dis={value === maxValue} />
-          <Button title="reset" clbk={reset} dis={value === minValue} />
+          <Button title="incre" clbk={incre} dis={value === maxValue || lessZero < value} />
+          <Button title="reset" clbk={reset} dis={value === minValue || lessZero < value} />
         </Wrapper>
         settings
         <WrapperInput>
-          <Input title={"Max Value"} value={inputMaxLocal} change={testSetValueMax} />
-          <Input title={"Start Value"} value={inputMinLocal} change={testSetValueMin} />
-          <Button title='set' set={setLocalSt} />
+          <Input title={"Max Value"} value={inputMaxLocal} change={testSetValueMax} erLesZero={setLessZero} />
+          <Input title={"Start Value"} value={inputMinLocal} change={testSetValueMin} erLesZero={setLessZero} />
+          <Button title='set' set={setLocalSt} dis={value > lessZero } />
         </WrapperInput>
       </div>
     </div>

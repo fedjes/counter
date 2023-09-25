@@ -11,6 +11,8 @@ type BTNPropsType = {
 }
 
 export const Button = (props: BTNPropsType) => {
+    console.log(props.dis);
+    
     if(props.clbk) {
         return <ButtonWrapper>
         <button disabled={props.dis} onClick={ props.clbk }>
