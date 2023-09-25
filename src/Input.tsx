@@ -17,8 +17,9 @@ export const Input = (props: InputropsType) => {
         if(+newValueInput < 0) {
             props.erLesZero(+newValueInput)
         }
-        if(props.change && newValueInput) {
+        else if (props.change && newValueInput) {
             props.change(JSON.parse(newValueInput)); //fix
+            // props.erLesZero(0)
         }
 
     }
