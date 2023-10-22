@@ -7,9 +7,9 @@ import styled from 'styled-components';
 import { Input } from './Input';
 
 
-//исправить увеличение счётчика до сетания локалСторэдж
+//исправить увеличение счётчика до сетания локалСторэдж?
 //при значении 0 должна быть разблокированна кнопка Увеличения счетчика ? 
-//при вводе стартовом значения меньше 0 в поле отображения счётчика должна быть ошибка "не корректное значение"
+
 //при совпадении стартового и максимального значения в поле отображения счётчика должна быть ошибка "не корректное значение"
 
 
@@ -28,7 +28,7 @@ function App() {
   let maxValue = inputMaxLocal;
 
   const [value, setValue] = useState<number>(0);
- 
+
 
   const incre = () => {
     if (value < inputMaxLocal) {
@@ -84,8 +84,10 @@ function App() {
 
   const changeInputMaxHandler = (value: string, e: ChangeEvent<HTMLInputElement>) => {
     let newValueInput = value;
-
-    if (+newValueInput < 0) {
+    if (Number(e.currentTarget.value) === minValue) {
+      setError('change value')
+    }
+    else if (+newValueInput < 0) {
       setLessZero(true)
       setError('Max valu is not correct')
     } else {
@@ -96,7 +98,11 @@ function App() {
 
   const changeInputMinHandler = (value: string, e: ChangeEvent<HTMLInputElement>) => {
     let newValueInput = value;
-    if (+newValueInput < 0) {
+    if (Number(e.currentTarget.value) === maxValue) {
+      setError('change value')
+    }
+
+    else if (+newValueInput < 0) {
       setLessZero(true)
       setError('Min valu is not correct')
     } else {
@@ -121,21 +127,24 @@ function App() {
   // }
   // console.log(inputMinLocal);
 
+  // disabled errors
+  const falseButton = minValue === maxValue;
+  const errButtonSet = minValue !== 0 || maxValue !== 0;
   return (
     <div className="App">
       <div>
         <Area value={value} error={error} />
         <Wrapper>
-        {/* || !localStorage.getItem('valueMaxLocal') */}
-          <Button title="incre" clbk={incre} dis={minValue === maxValue || lessZero } /> 
+          {/* || !localStorage.getItem('valueMaxLocal') */}
+          <Button title="incre" clbk={incre} dis={falseButton || lessZero} />
           {/* || !localStorage.getItem('valueMinLocal') */}
-          <Button title="reset" clbk={reset} dis={maxValue === minValue || lessZero } />
+          <Button title="reset" clbk={reset} dis={falseButton || lessZero} />
         </Wrapper>
         settings
         <WrapperInput>
           <Input title={"Max Value"} value={inputMaxLocal} onChange={changeInputMaxHandler} />
           <Input title={"Start Value"} value={inputMinLocal} onChange={changeInputMinHandler} />
-          <Button title={'set'} set={setLocalSt} dis={maxValue === minValue || lessZero} />
+          <Button title={'set'} set={setLocalSt} dis={falseButton || lessZero || errButtonSet} />
         </WrapperInput>
       </div>
     </div>
