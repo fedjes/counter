@@ -11,7 +11,7 @@ type BTNPropsType = {
 }
 
 export const Button = (props: BTNPropsType) => {
-    console.log(props.dis);
+    // console.log(props.dis);
     
     if(props.clbk) {
         return <ButtonWrapper>

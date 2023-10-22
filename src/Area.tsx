@@ -3,22 +3,18 @@ import styled from 'styled-components';
 
 type AreaPropsType = {
     value: number
-    lessZero: number
+    error: string
 }
 
 export const Area = (props: AreaPropsType) => {
-   let maxValLocal = localStorage.getItem('valueMaxLocal')
-   let newLocalFiltredValue = 0;
-   if(maxValLocal) {
-    newLocalFiltredValue = JSON.parse(maxValLocal)
-   }
+  
         return (
-            <StyledArea className={props.value === newLocalFiltredValue || props.lessZero ? 'colorInput' : ''}>
-                <h1>{props.value || !props.lessZero ? props.value : 'change settings value'}</h1>
+            <StyledArea className={props.error ? 'colorInput' : ''}>
+                <h1>{props.error ? props.error : props.value}</h1> 
             </StyledArea>
         )
     }
-
+    // || props.value === 0
 
     const StyledArea = styled.div`
     height: 100px;

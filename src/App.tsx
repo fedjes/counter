@@ -17,21 +17,20 @@ function App() {
 
   // let maxFalse = null;
   // let minFalse = null;
-  const [lessZero, setLessZero] = useState(0)
-  const [equal, setEqual] = useState(0)
-  console.log(lessZero);
+  const [lessZero, setLessZero] = useState(false)
+  const [error, setError] = useState('')
+  // console.log(lessZero);
 
   const [inputMinLocal, setInputMinLocal] = useState<number>(0);
   const [inputMaxLocal, setInputMaxLocal] = useState<number>(0);
 
   let minValue = inputMinLocal;
   let maxValue = inputMaxLocal;
+
   const [value, setValue] = useState<number>(0);
-
-
+ 
 
   const incre = () => {
-
     if (value < inputMaxLocal) {
       setValue(value + 1);
     }
@@ -48,27 +47,26 @@ function App() {
     localStorage.setItem('valueMaxLocal', JSON.stringify(inputMaxLocal))
     localStorage.setItem('valueMinLocal', JSON.stringify(inputMinLocal))
     setValue(inputMinLocal)
-
   }
 
-  const testSetValueMax = (value: number) => {
+  // const testSetValueMax = (value: number) => {
 
-    // if (value < 0) {
-    //   console.log('less 0 max');
-    //    minFalse = false
-    // } else {
-    // }
-    setInputMaxLocal(value)
-  }
+  //   // if (value < 0) {
+  //   //   console.log('less 0 max');
+  //   //    minFalse = false
+  //   // } else {
+  //   // }
+  //   setInputMaxLocal(value)
+  // }
 
-  const testSetValueMin = (value: number) => {
-    // if (value < 0) {
-    //   console.log('less 0 max');
-    //    maxFalse = false
-    // } else {
-    // }
-    setInputMinLocal(value)
-  }
+  // const testSetValueMin = (value: number) => {
+  //   // if (value < 0) {
+  //   //   console.log('less 0 max');
+  //   //    maxFalse = false
+  //   // } else {
+  //   // }
+  //   setInputMinLocal(value)
+  // }
 
   useEffect(() => {
     let localMinValue = localStorage.getItem('valueMinLocal')
@@ -81,25 +79,63 @@ function App() {
       setValue(newMinVal)
     }
   }, [])
-  
-  console.log({maxValue});
-  
-  console.log({ minValue });
-  console.log({ value });
+
+
+
+  const changeInputMaxHandler = (value: string, e: ChangeEvent<HTMLInputElement>) => {
+    let newValueInput = value;
+
+    if (+newValueInput < 0) {
+      setLessZero(true)
+      setError('Max valu is not correct')
+    } else {
+      setLessZero(false)
+    }
+    setInputMaxLocal(JSON.parse(newValueInput)); //fix
+  }
+
+  const changeInputMinHandler = (value: string, e: ChangeEvent<HTMLInputElement>) => {
+    let newValueInput = value;
+    if (+newValueInput < 0) {
+      setLessZero(true)
+      setError('Min valu is not correct')
+    } else {
+      setLessZero(false)
+    }
+    setInputMinLocal(JSON.parse(newValueInput))
+  }
+
+  //area Error
+  // let maxValLocal = localStorage.getItem('valueMaxLocal')
+  // let newLocalFiltredValue = 0;
+  // if (maxValLocal) {
+  //   newLocalFiltredValue = JSON.parse(maxValLocal)
+  // }
+
+  // button Error
+
+  // let trueValue = null;
+  // let falseValue = null;
+  // if(lessZero) {
+  //   trueValue = true;
+  // }
+  // console.log(inputMinLocal);
 
   return (
     <div className="App">
       <div>
-        <Area value={value} lessZero={lessZero} />
+        <Area value={value} error={error} />
         <Wrapper>
-          <Button title="incre" clbk={incre} dis={value === maxValue || lessZero > value} />
-          <Button title="reset" clbk={reset} dis={value === minValue || lessZero > value} />
+        {/* || !localStorage.getItem('valueMaxLocal') */}
+          <Button title="incre" clbk={incre} dis={minValue === maxValue || lessZero } /> 
+          {/* || !localStorage.getItem('valueMinLocal') */}
+          <Button title="reset" clbk={reset} dis={maxValue === minValue || lessZero } />
         </Wrapper>
         settings
         <WrapperInput>
-          <Input title={"Max Value"} value={inputMaxLocal} change={testSetValueMax} erLesZero={setLessZero} />
-          <Input title={"Start Value"} value={inputMinLocal} change={testSetValueMin} erLesZero={setLessZero} />
-          <Button title='set' set={setLocalSt}  />
+          <Input title={"Max Value"} value={inputMaxLocal} onChange={changeInputMaxHandler} />
+          <Input title={"Start Value"} value={inputMinLocal} onChange={changeInputMinHandler} />
+          <Button title={'set'} set={setLocalSt} dis={maxValue === minValue || lessZero} />
         </WrapperInput>
       </div>
     </div>
